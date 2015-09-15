@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Ruby-advisory-db by Tiger66639</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/Tiger66639/ruby-advisory-db">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/Tiger66639/ruby-advisory-db/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/Tiger66639/ruby-advisory-db/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Ruby-advisory-db</h1>
+          <p>A database of vulnerable Ruby Gems</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/Tiger66639">Tiger66639</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="ruby-advisory-database" class="anchor" href="#ruby-advisory-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ruby Advisory Database</h1>
+
+<p><a href="https://travis-ci.org/Tiger66639/ruby-advisory-db"><img src="https://travis-ci.org/Tiger66639/ruby-advisory-db.svg" alt="Build Status"></a>
+The Ruby Advisory Database aims to compile all advisories that are relevant to Ruby libraries.</p>
+
+<h2>
+<a id="goals" class="anchor" href="#goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goals</h2>
+
+<ol>
+<li>Provide advisory <strong>metadata</strong> in a <strong>simple</strong> yet <strong>structured</strong> <a href="http://www.yaml.org/">YAML</a>
+schema for automated tools to consume.</li>
+<li>Avoid reinventing <a href="http://cve.mitre.org/">CVE</a>s.</li>
+<li>Avoid duplicating the efforts of the <a href="http://www.osvdb.org/">OSVDB</a>.</li>
+</ol>
+
+<h2>
+<a id="directory-structure" class="anchor" href="#directory-structure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directory Structure</h2>
+
+<p>The database is a list of directories that match the names of Ruby libraries on
+<a href="https://rubygems.org/">rubygems.org</a>. Within each directory are one or more advisory files
+for the Ruby library. These advisory files are typically named using
+the advisories <a href="http://www.osvdb.org/">OSVDB</a> identifier number.</p>
+
+<pre><code>gems/:
+  actionpack/:
+    OSVDB-79727.yml  OSVDB-84513.yml  OSVDB-89026.yml  OSVDB-91454.yml
+    OSVDB-84243.yml  OSVDB-84515.yml  OSVDB-91452.yml
+</code></pre>
+
+<h2>
+<a id="format" class="anchor" href="#format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format</h2>
+
+<p>Each advisory file contains the advisory information in <a href="http://www.yaml.org/">YAML</a> format:</p>
+
+<pre><code>---
+gem: actionpack
+framework: rails
+cve: 2013-0156
+osvdb: 89026
+url: http://osvdb.org/show/osvdb/89026
+title: |
+  Ruby on Rails params_parser.rb Action Pack Type Casting Parameter Parsing
+  Remote Code Execution 
+
+description: |
+  Ruby on Rails contains a flaw in params_parser.rb of the Action Pack.
+  The issue is triggered when a type casting error occurs during the parsing
+  of parameters. This may allow a remote attacker to potentially execute
+  arbitrary code.
+
+cvss_v2: 10.0
+
+patched_versions:
+  - ~&gt; 2.3.15
+  - ~&gt; 3.0.19
+  - ~&gt; 3.1.10
+  - "&gt;= 3.2.11"
+</code></pre>
+
+<h3>
+<a id="schema" class="anchor" href="#schema" aria-hidden="true"><span class="octicon octicon-link"></span></a>Schema</h3>
+
+<ul>
+<li>
+<code>gem</code> [String]: Name of the affected gem.</li>
+<li>
+<code>framework</code> [String] (optional): Name of framework gem belongs to.</li>
+<li>
+<code>platform</code> [String] (optional): If this vulnerability is platform-specific, name of platform this vulnerability affects (e.g. JRuby)</li>
+<li>
+<code>cve</code> [String]: CVE id.</li>
+<li>
+<code>osvdb</code> [Fixnum]: OSVDB id.</li>
+<li>
+<code>url</code> [String]: The URL to the full advisory.</li>
+<li>
+<code>title</code> [String]: The title of the advisory.</li>
+<li>
+<code>date</code> [Date]: Disclosure date of the advisory.</li>
+<li>
+<code>description</code> [String]: Multi-paragraph description of the vulnerability.</li>
+<li>
+<code>cvss_v2</code> [Float]: The <a href="http://www.first.org/cvss/cvss-guide.html">CVSSv2</a> score for the vulnerability.</li>
+<li>
+<code>unaffected_versions</code> [Array&lt;String&gt;] (optional): The version requirements for the
+unaffected versions of the Ruby library.</li>
+<li>
+<code>patched_versions</code> [Array&lt;String&gt;]: The version requirements for the
+patched versions of the Ruby library.</li>
+</ul>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Please see <a href="https://github.com/rubysec/ruby-advisory-db/blob/master/CONTRIBUTORS.md">CONTRIBUTORS.md</a>.</p>
+
+<p>This database also includes data from the <a href="http://www.osvdb.org/">Open Source Vulnerability Database</a>
+developed by the Open Security Foundation (OSF) and its contributors.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
