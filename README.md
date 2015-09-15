@@ -1,5 +1,5 @@
 # Ruby Advisory Database
-
+[![Build Status](https://travis-ci.org/Tiger66639/ruby-advisory-db.svg)](https://travis-ci.org/Tiger66639/ruby-advisory-db)
 The Ruby Advisory Database aims to compile all advisories that are relevant to Ruby libraries.
 
 ## Goals
